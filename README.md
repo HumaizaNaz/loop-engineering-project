@@ -15,6 +15,16 @@ git add -A
 git commit -m "throwaway project 2 setup"
 ```
 
+## Why `/loop` is NOT used here
+
+`/loop` is for **time-interval** repeats (e.g. Project 1: "check every 1
+minute"). This project doesn't need to wait between attempts — Claude should
+fix and retest immediately, back to back. So there's no slash command here:
+you give Claude **one plain-English instruction in a normal `claude` session**,
+and it keeps calling `python -m pytest` and editing the file, on its own,
+inside that same reply, until the stopping condition (tests pass) is met or
+the 6-attempt cap is hit.
+
 ## Run it — one terminal
 
 ```bash
@@ -43,9 +53,30 @@ all tests pass.
 - Claude reads the failure, fixes `calculator.py`.
 - Attempt 2: `python -m pytest` → 3 passed → loop stops itself.
 
-(This repo has already been run once by hand — see the two commits in
-`git log`. Reset to the first commit with `git reset --hard <first-hash>`
-if you want a clean run.)
+## Demo log — what already happened in this repo
+
+Before you run it yourself, this exact loop was demonstrated once, by hand,
+inside a Claude Code chat session (not a fresh `claude` run in this folder —
+the assistant played maker *and* checker directly with its own tools, just
+to show the mechanics):
+
+1. `throwaway project 2 setup` commit — buggy `calculator.py` + correct
+   `test_calculator.py`.
+2. Attempt 1: `python -m pytest` → **3 failed** (operators were swapped:
+   `add` subtracted, `multiply` added, `subtract` multiplied).
+3. Fix applied to `calculator.py` (operators corrected) — `test_calculator.py`
+   left untouched.
+4. Attempt 2: `python -m pytest` → **3 passed** → stopped.
+5. `fix calculator...` commit, then this README/AGENTS.md/CLAUDE.md/
+   `.claude/settings.json` scaffolding was added and committed
+   (`bba181c`) to match Project 1's structure.
+6. `calculator.py` was then **reset back to its buggy version** (via
+   `git checkout 6fbde8e -- calculator.py`, left uncommitted) specifically
+   so a fresh, real `/`-free `claude` run — done by the person, not the
+   assistant — would have real failing tests to fix, per the steps above.
+
+Check `git log --oneline` and `git status` in this folder any time to see
+exactly where things stand versus this log.
 
 ## Done when (the course's checklist)
 
