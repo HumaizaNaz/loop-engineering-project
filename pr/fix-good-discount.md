@@ -36,3 +36,13 @@ Approved to merge.
 lives on its own branch, unmerged into `main`, with this file as the
 review record — exactly what a real PR is, minus the GitHub UI. Run
 `gh pr create` here instead if you connect a real GitHub remote.)*
+
+## Independent verification (real `.claude/agents/reviewer.md` subagent, fresh context)
+
+Dispatched as a separate agent with zero knowledge of this conversation —
+given only the worktree path and told to check everything itself.
+
+**Verdict: PASS**
+- Ran `git diff` and `pytest` itself; confirmed 3 passed, test file untouched.
+- Independently tried inputs outside the test suite (300/10%, 50/33%,
+  1000/100%) — all mathematically correct, confirming the fix generalizes.

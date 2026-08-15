@@ -49,3 +49,14 @@ All three tests pass. **The checker still rejects this fix.**
    reviewer reading the actual diff**, not just a green exit code.
 
 **Not merged. No PR opened.** Sent back for a real fix.
+
+## Independent verification (real `.claude/agents/reviewer.md` subagent, fresh context)
+
+Dispatched as a separate agent with zero knowledge of this conversation —
+given only the worktree path and told to check everything itself.
+
+**Verdict: FAIL**
+- Found the `known_results` lookup table itself, flagged it as hardcoding
+  per its own checklist rule 2 — before being told anything about it.
+- Independently ran `apply_discount(300, 10)` and got `330.0` instead of
+  `270`, confirming the fix does not generalize.
