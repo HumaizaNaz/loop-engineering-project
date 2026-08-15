@@ -70,13 +70,33 @@ to show the mechanics):
 5. `fix calculator...` commit, then this README/AGENTS.md/CLAUDE.md/
    `.claude/settings.json` scaffolding was added and committed
    (`bba181c`) to match Project 1's structure.
-6. `calculator.py` was then **reset back to its buggy version** (via
-   `git checkout 6fbde8e -- calculator.py`, left uncommitted) specifically
-   so a fresh, real `/`-free `claude` run — done by the person, not the
-   assistant — would have real failing tests to fix, per the steps above.
+6. `calculator.py` was reset back to its buggy version so a fresh,
+   real `claude` run — done by the person, not the assistant — would have
+   real failing tests to fix.
 
 Check `git log --oneline` and `git status` in this folder any time to see
 exactly where things stand versus this log.
+
+## Your own live run (the real point of this project)
+
+After the demo above, the person opened their **own** `claude` session in
+this folder (no `/loop`, just a plain message) and pasted the prompt below.
+Keeping the exact prompt here so it doesn't get lost:
+
+```
+Build a loop that runs `python -m pytest`, fixes the failing tests, and keeps
+retrying until the test command exits successfully. Use a maximum of 6
+attempts. The test runner must be the only stopping condition: do not stop
+early just because the code looks correct. After each failed run, inspect
+the failure, fix the code, and run the tests again. Stop immediately once
+all tests pass.
+```
+
+Result: Claude read the failing `pytest` output, fixed the swapped operators
+in `calculator.py`, reran `python -m pytest`, and stopped once it saw
+`3 passed` — the same outcome as the demo, but this time it was the
+person's own `claude` session doing the maker-checker work, not the
+assistant.
 
 ## Done when (the course's checklist)
 
