@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest*)",
+      "Edit(./calculator.py)",
+      "Read(./calculator.py)",
+      "Read(./test_calculator.py)"
+    ]
+  }
+}
