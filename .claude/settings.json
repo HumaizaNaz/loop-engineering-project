@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Grep(TODO)",
+      "Read(./progress.md)",
+      "Read(./src/*.py)",
+      "Edit(./progress.md)"
+    ]
+  }
+}
