@@ -1,0 +1,6 @@
+.claude/settings.local.json
+loop-project-4/loop-project-4-worktree-good/
+loop-project-4/loop-project-4-worktree-bad/
+__pycache__/
+*.pyc
+.pytest_cache/

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./long_task.sh *)",
+      "Bash(test -f done.flag)",
+      "Bash(cat done.flag)",
+      "Read(./done.flag)"
+    ]
+  }
+}
