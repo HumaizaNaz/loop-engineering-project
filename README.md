@@ -19,11 +19,21 @@ git commit -m "throwaway project 2 setup"
 
 `/loop` is for **time-interval** repeats (e.g. Project 1: "check every 1
 minute"). This project doesn't need to wait between attempts — Claude should
-fix and retest immediately, back to back. So there's no slash command here:
-you give Claude **one plain-English instruction in a normal `claude` session**,
-and it keeps calling `python -m pytest` and editing the file, on its own,
-inside that same reply, until the stopping condition (tests pass) is met or
-the 6-attempt cap is hit.
+fix and retest immediately, back to back. So the interval-based command
+doesn't fit — you need Concept 5's real command instead: **`/goal`**.
+
+## `/goal` vs. a plain sentence
+
+Both go in the exact same place — inside a normal `claude` session, typed as
+a message. The difference:
+
+- A **plain sentence** ("build a loop that runs pytest...") works because
+  Claude reasons its way through the retries on its own. It's not a special
+  mode — just an instruction Claude follows with its normal tools.
+- **`/goal <instruction>`** is Claude Code's actual **built-in run-until-done
+  command** for Concept 5. It explicitly manages the stopping condition and
+  the attempt cap for you, instead of relying on Claude to remember to keep
+  retrying. This is the one the course means by "conditional loop."
 
 ## Run it — one terminal
 
@@ -35,7 +45,22 @@ claude
 Say **yes** to the trust prompt (activates `.claude/settings.json`, so the
 loop doesn't stop to ask permission on every attempt).
 
-Then type one sentence:
+Then use `/goal` (recommended — this is Concept 5's real command):
+
+```
+/goal Fix calculator.py so that running `python3 test_calculator.py` exits
+with code 0 and prints "ALL TESTS PASSED". Do not edit test_calculator.py —
+only fix the bugs in calculator.py. After every change, actually run
+`python3 test_calculator.py` and show me the real output before claiming
+success. Stop after 6 attempts even if tests still fail, and if you stop
+without passing, tell me exactly which test is still failing and why.
+```
+
+(`test_calculator.py` supports both `python -m pytest` **and** standalone
+`python3 test_calculator.py` — the second prints `ALL TESTS PASSED` and
+exits 0 on success, exactly what the `/goal` prompt checks for.)
+
+Or, without `/goal`, a plain sentence also works:
 
 ```
 Build a loop that runs `python -m pytest`, fixes the failing tests, and keeps
