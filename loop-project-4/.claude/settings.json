@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest*)",
+      "Bash(python -c*)",
+      "Bash(git worktree*)",
+      "Bash(git diff*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Edit(./src/*.py)",
+      "Read(./src/*.py)",
+      "Read(./test/*.py)"
+    ]
+  }
+}
