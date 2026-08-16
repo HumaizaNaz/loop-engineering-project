@@ -58,12 +58,15 @@ This is one beat of a scheduled loop. Do these steps in order:
 
 ---
 
-## ⬜ Project 5 — Codify the body
-**Folder:** not created yet
+## ✅ Project 5 — Codify the body
+**Folder:** `loop-project-5/`
 **Concept:** dynamic-workflows interlude + Concept 8, 11 · Difficulty: medium-hard, 1-1.5 hrs
-**Build:** Turn Project 4's fix-loop into one re-runnable command/script (an "engine"): fan out to several candidate bugs in parallel worktrees, reviewer grades each. Run it twice.
-**Done when:** one command runs the whole draft-and-review body with no step-by-step prompting, **and** you prove a fresh session/shell remembers nothing from the last run — then name the two things it would need to become a real loop (a heartbeat + a progress file). That's the difference between an "engine" and a "loop."
-**Status:** not started.
+**Engine:** `run_fix_loop.sh` (`setup` / `verify` / `reset`) — pure shell, no AI, deterministic worktree + test-based checker.
+**Candidates:** `is_even` (inverted condition), `average` (off-by-one divisor), `reverse_words` (reversed chars instead of word order) — 3 bugs, 3 parallel isolated worktrees.
+**Run 1:** setup → 3 fresh dispatched agents (maker) fixed each bug in its own worktree/branch → `verify` → **3/3 PASS**.
+**Run 2 (the actual point):** `reset` (deletes the fix branches) → `setup` again → `verify` **without** redoing the maker step → **3/3 FAIL, identical to the original bugs**. Proved the engine has zero memory between runs — the fixes only ever lived on now-deleted branches; `main` was never updated.
+**Answer to "what would make this a loop":** a heartbeat (something to fire it on its own) + a spine (`progress.md` recording what's already fixed/merged).
+**Status:** DONE — one command ran the whole body, and the no-memory claim was proven on-machine, not just asserted.
 
 ---
 
