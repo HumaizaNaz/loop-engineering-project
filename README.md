@@ -100,31 +100,51 @@ Watch closely: does it act like the three issues are already fixed (it
 shouldn't know that — a fresh session has no memory), or does it redo the
 whole draft-and-review cycle from scratch, exactly like the first time?
 
-## Step 5 — write down what you saw
+## Step 5 — what actually happened (real run, not `/workflows` — see note below)
 
-Fill this in based on what actually happened (don't guess):
+`/workflows` did not exist as a command in this Claude Code install
+(`claude --version` → `2.1.233`) — typing it produced no match, and
+`/workflow` only fuzzy-matched unrelated plugin skills (`vercel:workflow`,
+`figma:figma-generate-design`). Per the course's own caveat ("dynamic
+workflows are a research preview"), this feature simply wasn't available
+here. So Step 3/4 were adapted: instead of saving and re-running a
+`/command`, the exact same plain-words prompt from Step 2 was pasted again
+into a **second, fully fresh `claude` session** (after `exit` + restart).
 
 ```
-What I observed on the second run:
--
+What was observed on the second run:
+- All three issues were fixed again from scratch: temperature_convert
+  (c + 32 → c * 9 / 5 + 32), string_reverse (s[-2::-1] → s[::-1]),
+  list_dedupe (set() → an order-preserving loop) — identical fixes to
+  run 1, independently re-derived.
+- The reviewer (@reviewer) re-graded all three and gave PASS again, with
+  its own fresh reasoning each time (e.g. re-verified temperature with
+  extra cases: -40°C, 25°C, -273.15°C).
 
-Did it reference anything from the first run's verdicts? (yes/no):
--
+Did it reference anything from the first run's verdicts? NO.
+- It never said "these are already fixed" or referred back to the first
+  run in any way. It treated all three bugs as freshly discovered and
+  did the full maker + checker cycle again, start to finish.
 
 What would this need to become a real loop instead of an engine?
-- A heartbeat: ___________________________
-- A spine (progress file): ___________________________
+- A heartbeat: something that fires this prompt on its own — a schedule
+  or a GitHub PR event — instead of a person pasting it into a new session.
+- A spine (progress file): a progress.md that each run reads first and
+  writes to after, recording which issues are already fixed/merged, so a
+  new run only processes what's actually new instead of redoing
+  everything every single time.
 ```
 
 ## Done when (the course's checklist)
 
-- [ ] One command (the saved `/fix-three-issues`) ran the whole
-      draft-and-review body — 3 issues, isolated worktrees, a verdict for
-      each — with no step-by-step prompting after you typed it
-- [ ] You confirmed on your own machine that a fresh session running that
-      same command has no memory of the previous run
-- [ ] You can name the two things (heartbeat + spine) this would need to
-      become a real loop
+- [x] One prompt ran the whole draft-and-review body — 3 issues, isolated
+      worktrees, a verdict for each — with no step-by-step prompting after
+      you typed it (both times)
+- [x] Confirmed on this machine that a fresh session running the exact
+      same prompt has no memory of the previous run — it redid all three
+      fixes and both verdicts from scratch
+- [x] Named the two things (heartbeat + spine) this would need to become
+      a real loop
 
 ## How this differs from `loop-project-5/`
 
