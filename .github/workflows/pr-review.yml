@@ -1,0 +1,57 @@
+name: Doorbell Loop — PR Review (Project 6)
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'loop-project-6/**'
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get the diff for loop-project-6
+        run: |
+          git fetch origin "${{ github.event.pull_request.base.ref }}"
+          git diff "origin/${{ github.event.pull_request.base.ref }}...HEAD" -- loop-project-6/ > /tmp/pr.diff
+          echo "--- diff being reviewed ---"
+          cat /tmp/pr.diff
+
+      - name: Ask Claude to review the diff
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          DIFF_CONTENT=$(head -c 8000 /tmp/pr.diff)
+          BODY=$(jq -n --arg diff "$DIFF_CONTENT" '{
+            model: "claude-haiku-4-5-20251001",
+            max_tokens: 500,
+            messages: [{
+              role: "user",
+              content: ("You are a strict, skeptical code reviewer for a course exercise about event-driven review loops. Review the diff below for real bugs — especially deleted null/None checks and off-by-one errors. Reply in this exact format: first line is either \"BUG FOUND\" or \"LOOKS OK\", then a short markdown explanation quoting the specific line if you found a bug.\n\nDiff:\n" + $diff)
+            }]
+          }')
+
+          curl -s https://api.anthropic.com/v1/messages \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "content-type: application/json" \
+            -d "$BODY" > /tmp/response.json
+
+          jq -r '.content[0].text' /tmp/response.json > /tmp/review.md
+          echo "--- review ---"
+          cat /tmp/review.md
+
+      - name: Post the review as a PR comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/review.md
