@@ -68,6 +68,16 @@ This is one beat of a scheduled loop. Do these steps in order:
 **Answer to "what would make this a loop":** a heartbeat (something to fire it on its own) + a spine (`progress.md` recording what's already fixed/merged).
 **Status:** DONE — one command ran the whole body, and the no-memory claim was proven on-machine, not just asserted.
 
+## ✅ Project 5(b) — Codify the body, the `/workflows` way
+**Folder:** `loop-project-5-b/`
+**Concept:** dynamic-workflows interlude + Concept 8, 11 · Difficulty: medium-hard, 1-1.5 hrs
+**Different from 5(a):** tried the actual Claude Code approach (`/workflows` → save as `/command`) instead of a hand-written script.
+**Blocked:** `/workflows` did not exist in this Claude Code install (`2.1.233`) — the course's own "research preview" caveat applied.
+**Adapted:** same plain-words prompt (3 candidates: `temperature_convert`, `string_reverse`, `list_dedupe`) run twice in genuinely separate `claude` sessions instead of via a saved command.
+**Run 1:** 3 parallel isolated worktrees, maker + `@reviewer` subagent → **3/3 PASS**.
+**Run 2 (fresh session, no `/workflows`):** exact same prompt pasted again → **redid all 3 fixes from scratch**, same PASS verdicts, zero reference to run 1 — proved no session memory, same lesson as 5(a) via a different mechanism.
+**Status:** DONE — documented the blocker honestly, adapted, still proved the point.
+
 ---
 
 ## ⚠️ Project 6 — The doorbell loop (partial — see loop-project-6/README.md)
