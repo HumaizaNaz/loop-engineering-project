@@ -1,6 +1,6 @@
 # Loop Engineering Crash Course — Practice Projects
 
-My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 5 of 8 practice projects done (including two takes on Project 5), Project 6 partially done (see below). Full progress log below (also in `TASKS.md`).
+My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 6 of 8 practice projects done (including two takes on Project 5), Project 6 partially done (see below). Full progress log below (also in `TASKS.md`).
 
 Each project has its own folder (`loop-project-N/`) with its own `README.md`, `AGENTS.md`, `CLAUDE.md`, `.claude/settings.json`, and its own git history (preserved here via `git subtree` — see each folder's commits in `git log` for the real attempt-by-attempt progress).
 
@@ -94,11 +94,14 @@ This is one beat of a scheduled loop. Do these steps in order:
 
 ---
 
-## ⬜ Project 7 — Break it on purpose
+## ✅ Project 7 — Break it on purpose
+**Folder:** `loop-project-7/` (built on Project 3's TODO-scanner loop)
 **Concept:** Observability + Concept 13 (cost) + 14 · Difficulty: medium, 45-60 min
-**Build:** Take the Project 3 loop. Measure one beat's token cost, multiply by cadence → monthly cost. Then sabotage it (point at a nonexistent file, or an impossible success condition, with a limit set) and let it fail on schedule.
-**Done when:** you can say what failed and when, using **only** the spine (log + `progress.md`) — no replaying the run. The loop must leave a clear "needs a human" note instead of failing silently, and you know its monthly cost.
-**Status:** not started.
+**Cost (real, measured):** one beat = 38,808 tokens (real harness usage, not a guess) ≈ $0.163/beat at Sonnet 5 pricing → **≈ $4.89/month daily**, **≈ $117/month hourly**, **≈ $1,410/month every 5 min**. Full math in `COST.md`.
+**Sabotage:** hardened `AGENTS.md` first (every beat must write one `SUCCESS`/`FAILED` line to `beat.log`, never silent), then pointed a beat at `src_incoming/` (doesn't exist).
+**Result:** did NOT fail silently — `beat.log` got `FAILED | src_incoming: No such file or directory | NEEDS HUMAN: ...`, and `progress.md`'s Beat 4 entry recorded the same in full.
+**Diagnosis:** read only `beat.log` + `progress.md` (no replay) → correctly identified what failed (`src_incoming/` missing) and exactly when (`2026-08-17T00:12:43Z`).
+**Status:** DONE — all three "done when" conditions met for real.
 
 ---
 
