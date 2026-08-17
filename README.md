@@ -1,6 +1,6 @@
 # Loop Engineering Crash Course — Practice Projects
 
-My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 5 of 8 practice projects done so far. Full progress log below (also in `TASKS.md`).
+My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 5 of 8 practice projects done, Project 6 partially done (see below). Full progress log below (also in `TASKS.md`).
 
 Each project has its own folder (`loop-project-N/`) with its own `README.md`, `AGENTS.md`, `CLAUDE.md`, `.claude/settings.json`, and its own git history (preserved here via `git subtree` — see each folder's commits in `git log` for the real attempt-by-attempt progress).
 
@@ -69,11 +69,16 @@ This is one beat of a scheduled loop. Do these steps in order:
 
 ---
 
-## ⬜ Project 6 — The doorbell loop
+## ⚠️ Project 6 — The doorbell loop (partial — see loop-project-6/README.md)
+**Folder:** `loop-project-6/`
 **Concept:** 7 (event-driven) + 10 (connectors) · Difficulty: medium, 45-60 min
-**Build:** Make a throwaway repo review its own pull requests automatically — a GitHub PR-trigger Routine (or `opencode github install`). Open a PR with one planted bug (e.g. off-by-one, deleted null check) and wait.
-**Done when:** the PR gets an unprompted review that flags the planted bug. Pushing again re-fires the loop via the `synchronize` event — completes all 4 heartbeat types (in-session, conditional, scheduled, event-driven) across Projects 1, 2, 3, 6.
-**Status:** not started.
+**Bug planted:** removed `if age is None: return False` from `is_valid_age`, disguised as a readability refactor — branch `fix/age-validation-refactor`.
+**Two automated paths tried, both blocked:**
+1. GitHub Actions + direct Anthropic API call — needs a paid API key (Claude Pro doesn't include API billing). Deleted.
+2. Real Claude Code Routine + GitHub PR webhook (`RemoteTrigger`) — blocked by an org-admin restriction on "Claude Code Web" (blocks the GitHub App install), and separately, a privacy call not to grant a shared/friend's account broad GitHub access. Test routine created then disabled (API has no delete).
+**What was done instead:** a real PR (**#1**, opened via GitHub API) with the real bug, reviewed for real (diff read, bug reasoned about) and the review **posted as a real GitHub PR comment** — [see the PR](https://github.com/HumaizaNaz/loop-engineering-project/pull/1) — just triggered by hand instead of by a webhook.
+**Done when:** review-flags-the-bug ✅ done for real. Automatic zero-prompt firing ❌ blocked (documented, reproducible if account restrictions change).
+**Status:** PARTIAL — honest stopping point, fully documented in `loop-project-6/README.md`.
 
 ---
 
