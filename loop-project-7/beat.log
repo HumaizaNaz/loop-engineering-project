@@ -1,0 +1,2 @@
+2026-08-17T00:11:45Z | SUCCESS | found 4 TODOs, 0 new
+2026-08-17T00:12:43Z | FAILED | src_incoming: No such file or directory | NEEDS HUMAN: create src_incoming/ or confirm the correct source path to scan
