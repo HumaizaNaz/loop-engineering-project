@@ -1,7 +1,5 @@
 def is_valid_age(age):
-    """Return True if age is a sane human age, False for None or out-of-range."""
-    if age is None:
-        return False
+    """Return True if age is a sane human age, False if out-of-range."""
     return 0 <= age <= 120
 
 
