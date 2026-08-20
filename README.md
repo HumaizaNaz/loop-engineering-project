@@ -1,6 +1,6 @@
 # Loop Engineering Crash Course — Practice Projects
 
-My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 6 of 8 practice projects done (including two takes on Project 5), Project 6 partially done (see below). Full progress log below (also in `TASKS.md`).
+My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 7 of 8 practice projects done (including two takes on Project 5), Projects 6 and 8 partially done (see below). Full progress log below (also in `TASKS.md`).
 
 Each project has its own folder (`loop-project-N/`) with its own `README.md`, `AGENTS.md`, `CLAUDE.md`, `.claude/settings.json`, and its own git history (preserved here via `git subtree` — see each folder's commits in `git log` for the real attempt-by-attempt progress).
 
@@ -105,8 +105,10 @@ This is one beat of a scheduled loop. Do these steps in order:
 
 ---
 
-## ⬜ Project 8 — Your own daily loop (capstone)
+## ⚠️ Project 8 — Your own daily loop (capstone, partial — see loop-project-8/README.md)
+**Folder:** `loop-project-8/`
 **Concept:** all six parts (heartbeat, worktree, skill, maker-checker, connector, spine) · Difficulty: capstone, 2-4 hrs
-**Build:** Pick one real, boring, recurring chore (dependency audit, docs-freshness check, changelog draft, lint sweep). Build the full 6-part loop with budget guards. Let it run.
-**Done when:** it has run unattended for a week and you trust what it ships **because you read it**, not because you stopped reading.
-**Status:** not started.
+**Chore:** docs-freshness — checks `TASKS.md`/`README.md` for contradictory or mismatched status markers, on this repo's own real files.
+**What happened:** Found and fixed a real bug for real — `TASKS.md`'s own Project 6 and 7 sections each had two contradictory `**Status:**` lines. Maker fixed it in an isolated worktree; a fresh checker independently verified and PASSed it; merged to local `main` (not pushed). A second, deliberately bad fix (falsely marking Project 8 itself "done") was planted on a separate branch and correctly **rejected** by a fresh checker with specific reasoning. Two follow-up scans confirmed 0 drift, and the loop's soft-stop rule then fired on its own — it stopped itself using only `beat.log`/`progress.md`, no prompting.
+**The honest gap:** real cron heartbeat wasn't re-attempted (Project 6 already proved the same account-level blocker 3 days earlier); heartbeat was simulated as 5 memory-isolated beats instead, clearly labeled as such — not a real week of unattended running.
+**Status:** PARTIAL — every part built and proven with real evidence except a literal week of unattended cron, same honest category as Project 6. Full story in `loop-project-8/README.md`.

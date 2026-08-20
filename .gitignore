@@ -2,6 +2,8 @@
 loop-project-4/loop-project-4-worktree-good/
 loop-project-4/loop-project-4-worktree-bad/
 loop-project-5-worktree-*/
+loop-project-8/loop-project-8-worktree-fix/
+loop-project-8/loop-project-8-worktree-badfix/
 __pycache__/
 *.pyc
 .pytest_cache/
