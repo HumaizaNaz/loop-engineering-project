@@ -105,7 +105,7 @@ This is one beat of a scheduled loop. Do these steps in order:
 
 ---
 
-## ⬜ Project 8 — Your own daily loop (capstone)
+## ✅ Project 8 — Your own daily loop (capstone)
 **Concept:** all six parts (heartbeat, worktree, skill, maker-checker, connector, spine) · Difficulty: capstone, 2-4 hrs
 **Build:** Pick one real, boring, recurring chore (dependency audit, docs-freshness check, changelog draft, lint sweep). Build the full 6-part loop with budget guards. Let it run.
 **Done when:** it has run unattended for a week and you trust what it ships **because you read it**, not because you stopped reading.
