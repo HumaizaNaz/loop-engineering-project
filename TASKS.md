@@ -90,7 +90,6 @@ This is one beat of a scheduled loop. Do these steps in order:
 **What was done instead:** a real PR (**#1**, opened via GitHub API) with the real bug, reviewed for real (diff read, bug reasoned about) and the review **posted as a real GitHub PR comment** — https://github.com/HumaizaNaz/loop-engineering-project/pull/1 — just triggered by hand instead of by a webhook.
 **Done when:** review-flags-the-bug ✅ done for real. Automatic zero-prompt firing ❌ blocked (documented, reproducible if account restrictions change).
 **Status:** PARTIAL — honest stopping point, fully documented in `loop-project-6/README.md`.
-**Status:** not started.
 
 ---
 
@@ -102,7 +101,6 @@ This is one beat of a scheduled loop. Do these steps in order:
 **Result:** did NOT fail silently — `beat.log` got `FAILED | src_incoming: No such file or directory | NEEDS HUMAN: ...`, and `progress.md`'s Beat 4 entry recorded the same in full.
 **Diagnosis:** read only `beat.log` + `progress.md` (no replay) → correctly identified what failed (`src_incoming/` missing) and exactly when (`2026-08-17T00:12:43Z`).
 **Status:** DONE — all three "done when" conditions met for real.
-**Status:** not started.
 
 ---
 
