@@ -1,6 +1,6 @@
 # Loop Engineering Crash Course — Practice Projects
 
-My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 7 of 8 practice projects done (including two takes on Project 5), Projects 6 and 8 partially done (see below). Full progress log below (also in `TASKS.md`).
+My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 7 of 12 practice projects done (including two takes on Project 5), Projects 6 and 8 partially done, Projects 9–12 (the routine drills + second capstone) not started yet (see below). Full progress log below (also in `TASKS.md`).
 
 Each project has its own folder (`loop-project-N/`) with its own `README.md`, `AGENTS.md`, `CLAUDE.md`, `.claude/settings.json`, and its own git history (preserved here via `git subtree` — see each folder's commits in `git log` for the real attempt-by-attempt progress).
 
@@ -112,3 +112,51 @@ This is one beat of a scheduled loop. Do these steps in order:
 **What happened:** Found and fixed a real bug for real — `TASKS.md`'s own Project 6 and 7 sections each had two contradictory `**Status:**` lines. Maker fixed it in an isolated worktree; a fresh checker independently verified and PASSed it; merged to local `main` (not pushed). A second, deliberately bad fix (falsely marking Project 8 itself "done") was planted on a separate branch and correctly **rejected** by a fresh checker with specific reasoning. Two follow-up scans confirmed 0 drift, and the loop's soft-stop rule then fired on its own — it stopped itself using only `beat.log`/`progress.md`, no prompting.
 **The honest gap:** real cron heartbeat wasn't re-attempted (Project 6 already proved the same account-level blocker 3 days earlier); heartbeat was simulated as 5 memory-isolated beats instead, clearly labeled as such — not a real week of unattended running.
 **Status:** PARTIAL — every part built and proven with real evidence except a literal week of unattended cron, same honest category as Project 6. Full story in `loop-project-8/README.md`.
+
+---
+
+## Practice: three routine drills (Projects 9–11) + Project 12 (second capstone)
+
+From the course's Appendix on Routines. These reproduce the appendix's
+main failure cases in a throwaway repo, at low cost/risk. Project 9 uses
+one-off runs only (free, no cap cost). Projects 10–11 need ~5 runs total
+(one day of a Pro cap). Project 12 is **not** a drill — it's a second
+capstone, builds on Project 3 or 8, and runs weekly.
+
+**Known likely blocker:** Projects 9–11 all need a real Claude Code
+Routine tied to a GitHub repo. Project 6 already proved this shared
+account is blocked here — "Claude Code Web" disabled by an org admin,
+and routine creation with a `git_repository` source failing with
+"Connect your GitHub account before saving a routine that uses a GitHub
+repository," even after OAuth. Not re-tested yet for these three — will
+attempt for real when work starts, and document honestly either way.
+
+## ⬜ Project 9 — Rehearse a routine for free
+**Concept:** Uses A1, A3 (one-off schedules), A5 (reading runs) · Difficulty: easy, 20-30 min
+**Build:** In a throwaway repo, create a routine whose prompt does one small, checkable thing — e.g. summarizing yesterday's commits onto a `claude/summary` branch. Do not put it on a repeating schedule. Fire it with a one-off run (`/schedule tomorrow at 9am, …` or Run now) and read the full transcript, not the status column. Then change the prompt so the task must fail, by having it read a file that does not exist, and fire it once more.
+**Done when:** you have seen two green runs — one whose transcript shows success, one whose transcript shows failure — and can say in one sentence why the status column could not tell them apart. (The A5 lesson: green means the session ended without an infrastructure error, nothing more.)
+**Status:** not started.
+
+---
+
+## ⬜ Project 10 — The secrets drill
+**Concept:** Uses A4 (secrets), A2 (the environment) · Difficulty: easy to medium, 30-45 min
+**Build:** Write a prompt that needs one secret (a dummy token is fine — the drill is about where the value lives, not what it unlocks). First run: put the token in a gitignored `.env` file and fire the routine; watch it fail to find the value, and read the transcript to see what Claude tried instead. Second run: move the token into the environment-variables panel, and add the prompt line: "credentials are available as environment variables; do not look for a .env file."
+**Done when:** the second run reads the token from the environment, and you can explain the mechanical reason the first run could not: gitignored files never reach GitHub, so the fresh cloud clone never contains them.
+**Status:** not started.
+
+---
+
+## ⬜ Project 11 — Build the two-routine gate
+**Concept:** Uses A3 (the API trigger), A4 (the gate), A6 (the checklist) · Difficulty: medium to hard, 1-2 hrs
+**Build:** Routine A, on a one-off schedule, drafts something reviewable — a `claude/` branch, or a short summary posted through a connector. Routine B has an API trigger and performs one small follow-up action. Store B's bearer token the moment it is shown, because it is shown once. Review A's draft yourself. Then approve it by firing B with the curl call from A3.
+**Done when:** three things are true — B ran only because you fired it, B's transcript shows the action actually happened, and you have run the A6 checklist over both routines, with connectors pruned, unrestricted pushes off, and a state file chosen. (This is the human gate from Part 5, built out of real parts.)
+**Status:** not started.
+
+---
+
+## ⬜ Project 12 — Build a dreaming loop (second capstone, not a drill)
+**Concept:** Concept 12 (spine and improvement loop), Concept 11 (maker-checker), Concept 6 (schedule), Part 5 (human gate) · Difficulty: capstone, 2-3 hrs · builds on Project 3 or 8, runs weekly (plan its runs separately from the drills above)
+**Build:** Needs a loop that has already run for a week and left dated entries in `progress.md` (Project 3 or Project 8 gives you one — Project 8's `progress.md`/`beat.log` are real and dated). Build a second loop over it: on a weekly schedule, it reads all log entries since the date in its own `dreaming-state.md`, looks for any failure or correction that appears more than once, and drafts the smallest rules-file or skill change that would prevent it, as a PR on a `claude/` branch — never a direct commit. The PR description must cite its evidence: which runs, how often, and why this line stops it. It also proposes one deletion: a rule no recent run needed. Finishes by updating `dreaming-state.md`.
+**Done when:** three things are true — the PR's proposed change traces to real, cited log entries, not a plausible-sounding guess; a deliberately planted repeated failure in the logs (added by hand) gets caught and turned into a proposal; and nothing changed in the rules file without you merging it. (If the loop proposes changes with no evidence attached, tighten the prompt — an improvement loop that guesses is worse than none, because its guesses steer every future run.)
+**Status:** not started.
