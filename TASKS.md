@@ -148,11 +148,14 @@ attempt for real when work starts, and document honestly either way.
 
 ---
 
-## ⬜ Project 11 — Build the two-routine gate
+## ⚠️ Project 11 — Build the two-routine gate (spec complete, not live — see loop-project-11/README.md)
+**Folder:** `loop-project-11/`
 **Concept:** Uses A3 (the API trigger), A4 (the gate), A6 (the checklist) · Difficulty: medium to hard, 1-2 hrs
 **Build:** Routine A, on a one-off schedule, drafts something reviewable — a `claude/` branch, or a short summary posted through a connector. Routine B has an API trigger and performs one small follow-up action. Store B's bearer token the moment it is shown, because it is shown once. Review A's draft yourself. Then approve it by firing B with the curl call from A3.
-**Done when:** three things are true — B ran only because you fired it, B's transcript shows the action actually happened, and you have run the A6 checklist over both routines, with connectors pruned, unrestricted pushes off, and a state file chosen. (This is the human gate from Part 5, built out of real parts.)
-**Status:** not started.
+**Two real blockers, both named honestly:** (1) creating Routine A for real would write a Google Calendar event into the shared account's *actual owner's* real Calendar — the harness itself flagged this as needing explicit human go-ahead, and the choice was made not to touch someone else's personal account for a practice drill. (2) Routine B's API trigger — the exact mechanism this project tests — can only be enabled via the claude.ai web UI; no tool can create one, only fire an existing one.
+**What was built instead:** full, ready-to-use specs for both routines (`ROUTINE-A-SPEC.md`, `ROUTINE-B-SPEC.md`), each marked with an `AI ROUTINE NEEDS TO BE CREATED HERE` comment, plus `SETUP.md` with the exact build order and the Appendix A6 checklist pre-filled for this pair — ready to build for real in under 10 minutes on an account where these two blockers don't apply (e.g. the user's own Claude account).
+**Done when:** three things are true — B ran only because you fired it, B's transcript shows the action actually happened, and you have run the A6 checklist over both routines. **Pending** — needs the routines to actually exist.
+**Status:** NOT LIVE (specced) — same honest category as Project 6's undone parts. Full story in `loop-project-11/README.md`.
 
 ---
 
