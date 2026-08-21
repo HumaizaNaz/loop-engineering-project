@@ -1,6 +1,6 @@
 # Loop Engineering Crash Course — Practice Projects
 
-My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 7 of 12 practice projects done (including two takes on Project 5), Projects 6 and 8 partially done, Projects 9–12 (the routine drills + second capstone) not started yet (see below). Full progress log below (also in `TASKS.md`).
+My work through the [Loop Engineering crash course](https://agentfactory.panaversity.org/docs/loop-engineering-crash-course#practice-projects) — 8 of 12 practice projects done (including two takes on Project 5), Projects 6 and 8 partially done, Project 10–12 not started yet (see below). Full progress log below (also in `TASKS.md`).
 
 Each project has its own folder (`loop-project-N/`) with its own `README.md`, `AGENTS.md`, `CLAUDE.md`, `.claude/settings.json`, and its own git history (preserved here via `git subtree` — see each folder's commits in `git log` for the real attempt-by-attempt progress).
 
@@ -131,11 +131,13 @@ and routine creation with a `git_repository` source failing with
 repository," even after OAuth. Not re-tested yet for these three — will
 attempt for real when work starts, and document honestly either way.
 
-## ⬜ Project 9 — Rehearse a routine for free
+## ✅ Project 9 — Rehearse a routine for free
+**Folder:** `loop-project-9/`
 **Concept:** Uses A1, A3 (one-off schedules), A5 (reading runs) · Difficulty: easy, 20-30 min
-**Build:** In a throwaway repo, create a routine whose prompt does one small, checkable thing — e.g. summarizing yesterday's commits onto a `claude/summary` branch. Do not put it on a repeating schedule. Fire it with a one-off run (`/schedule tomorrow at 9am, …` or Run now) and read the full transcript, not the status column. Then change the prompt so the task must fail, by having it read a file that does not exist, and fire it once more.
-**Done when:** you have seen two green runs — one whose transcript shows success, one whose transcript shows failure — and can say in one sentence why the status column could not tell them apart. (The A5 lesson: green means the session ended without an infrastructure error, nothing more.)
-**Status:** not started.
+**Adapted:** used a no-repo routine instead of the course's repo-based example — the GitHub App connection is still blocked on this shared account (same as Project 6), and A5's lesson doesn't need a repo at all.
+**What happened:** created one real Claude Code Routine via the API, fired it twice by hand ("Run now"). Run 1 (compute 2026+20+8) → correct answer, `result: success`. Run 2 (read a file that doesn't exist) → task genuinely failed (file not found, contents never obtained) — but the run-level result was **still `success is_error=false`**, identical in shape to Run 1's.
+**Done when:** two green runs seen, one real success (Run 1) and one real failure (Run 2) — confirmed from the actual transcripts, not assumed. One-sentence answer: the status column only reports whether the session completed without crashing, not whether the requested task actually happened — that's only visible in the transcript.
+**Status:** DONE — real routine, real runs, real transcripts. Full story in `loop-project-9/README.md`.
 
 ---
 
