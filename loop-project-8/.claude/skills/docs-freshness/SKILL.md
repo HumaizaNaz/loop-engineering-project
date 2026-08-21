@@ -28,8 +28,11 @@ beats where fewer than 2 prior entries exist.)
 
 ## 3. Scan for drift
 
-Read root `TASKS.md` and root `README.md` (repo root, one level up from
-`loop-project-8/`). For each numbered project section in `TASKS.md`:
+Read root `TASKS.md` and root `README.md`. Resolve the repo root
+robustly — e.g. via `git rev-parse --show-toplevel` — never via a fixed
+relative path like `../TASKS.md`; the beat must find the right files
+regardless of the working directory it happens to be invoked from. For
+each numbered project section in `TASKS.md`:
 
 - Find every line starting with `**Status:**` inside that section.
   - **More than one such line = a CONTRADICTION.** TASKS.md is
