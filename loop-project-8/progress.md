@@ -88,3 +88,26 @@ both found 0 issues). Per the skill's soft-stop rule, the *next* beat
 should check this condition first and stop without scanning.
 
 No edits made to `TASKS.md` or `README.md` — scan-and-log only, per beat rules.
+
+### Beat 6 — 2026-08-21T08:00:00Z — FAILED
+
+Beat was invoked from a different working directory than usual. The
+skill's step 3 resolves `TASKS.md`/`README.md` via the hardcoded
+relative path `../TASKS.md` / `../README.md` ("one level up from
+`loop-project-8/`") — from the actual working directory this beat ran
+in, that path did not point at the real files. `TASKS.md` could not be
+found. No scan performed, no comparison against prior history possible.
+
+NEEDS HUMAN: confirm the correct invocation directory going forward, or
+change the skill to resolve the repo root robustly (e.g. via `git rev-parse
+--show-toplevel`) instead of assuming a fixed relative path.
+
+### Beat 7 — 2026-08-21T08:30:00Z — FAILED
+
+Same failure recurred: beat run from a different working directory
+again, `TASKS.md` again not found at the hardcoded relative path
+`../TASKS.md`. This is the second occurrence of the exact same root
+cause as Beat 6.
+
+NEEDS HUMAN: same as Beat 6 — the hardcoded relative path is now a
+repeated, not one-off, failure mode.
