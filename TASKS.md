@@ -140,11 +140,13 @@ attempt for real when work starts, and document honestly either way.
 
 ---
 
-## ⬜ Project 10 — The secrets drill
+## ⚠️ Project 10 — The secrets drill (mostly real — see loop-project-10/README.md)
+**Folder:** `loop-project-10/`
 **Concept:** Uses A4 (secrets), A2 (the environment) · Difficulty: easy to medium, 30-45 min
-**Build:** Write a prompt that needs one secret (a dummy token is fine — the drill is about where the value lives, not what it unlocks). First run: put the token in a gitignored `.env` file and fire the routine; watch it fail to find the value, and read the transcript to see what Claude tried instead. Second run: move the token into the environment-variables panel, and add the prompt line: "credentials are available as environment variables; do not look for a .env file."
-**Done when:** the second run reads the token from the environment, and you can explain the mechanical reason the first run could not: gitignored files never reach GitHub, so the fresh cloud clone never contains them.
-**Status:** not started.
+**Split into two real halves:** (1) the "gitignored files never reach GitHub" mechanic was proven for real, locally — a real `.env` gitignored, committed, then a real `git clone` to a fresh directory confirmed with `test -f` that `.env` is genuinely absent, the identical mechanic a cloud clone would hit. (2) a real Claude Code Routine confirmed the environment-variable-reading *mechanism* works (via Bash), and honestly surfaced that adding a brand-new custom secret still needs the same web-UI Environment step as Projects 9/11 — nothing invented to paper over that gap.
+**Side finding:** the routine's sandbox already has ~140 platform-managed environment variables for its own tooling, a few credential-shaped by name (`GH_TOKEN`, `AWS_ACCESS_KEY_ID`, etc.) — noted, not used, clearly not the user's own credentials.
+**Done when:** gitignore mechanic explained AND proven (not just asserted) ✅. Second run reading a *custom* token from the environment — pending the same UI step as Project 9/11.
+**Status:** mostly real. Full evidence (real command output) in `loop-project-10/README.md`.
 
 ---
 
@@ -159,8 +161,9 @@ attempt for real when work starts, and document honestly either way.
 
 ---
 
-## ⬜ Project 12 — Build a dreaming loop (second capstone, not a drill)
+## ✅ Project 12 — Build a dreaming loop (second capstone, not a drill)
+**Folder:** `loop-project-12/`
 **Concept:** Concept 12 (spine and improvement loop), Concept 11 (maker-checker), Concept 6 (schedule), Part 5 (human gate) · Difficulty: capstone, 2-3 hrs · builds on Project 3 or 8, runs weekly (plan its runs separately from the drills above)
-**Build:** Needs a loop that has already run for a week and left dated entries in `progress.md` (Project 3 or Project 8 gives you one — Project 8's `progress.md`/`beat.log` are real and dated). Build a second loop over it: on a weekly schedule, it reads all log entries since the date in its own `dreaming-state.md`, looks for any failure or correction that appears more than once, and drafts the smallest rules-file or skill change that would prevent it, as a PR on a `claude/` branch — never a direct commit. The PR description must cite its evidence: which runs, how often, and why this line stops it. It also proposes one deletion: a rule no recent run needed. Finishes by updating `dreaming-state.md`.
-**Done when:** three things are true — the PR's proposed change traces to real, cited log entries, not a plausible-sounding guess; a deliberately planted repeated failure in the logs (added by hand) gets caught and turned into a proposal; and nothing changed in the rules file without you merging it. (If the loop proposes changes with no evidence attached, tighten the prompt — an improvement loop that guesses is worse than none, because its guesses steer every future run.)
-**Status:** not started.
+**What happened:** built a second loop watching Project 8's real spine. Two planted "repeated failures" were correctly *rejected* by the loop for lacking real evidence (an uncommitted log line, then a log line claiming a branch that didn't exist) — proof the loop verifies artifacts, not just text. A third plant (two real, committed `FAILED` entries describing a genuine hardcoded-relative-path fragility in Project 8's own skill) was caught, cited word-for-word, and — unprompted — **honestly disclosed as planted** rather than presented as organic. A fresh checker independently re-verified every citation against `main` and the fix's mechanics, verdict PASS. Merged to local `main` (not pushed) after a human check-in. A deletion candidate (an unexercised check) was considered and correctly declined with reasoning, not deleted just to have proposed something.
+**Done when:** three things are true — PR traces to cited log entries (checker-verified, not just asserted) ✅; a planted repeated failure gets caught and turned into a proposal ✅ (on the third, honestly-real-bug attempt — the first two rejections are arguably stronger evidence the loop works) ✅; nothing changed in the rules file without merging ✅ (isolated branch until human-approved).
+**Status:** DONE — full story, including two honest false starts, in `loop-project-12/README.md`.
